@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+// print array
+void printArray(int array[], int size) {
+  for (int i = 0; i < size; ++i) {
+    cout << "  " << array[i];
+  }
+  cout << "\n";
+}
+
+void bubblesortI(int *A, int n) {
+    int i, aux, j; 
+    int troca=0;                //1
+    for(i=0; i<n-1; i++){       //Pìor C. = 2n          Melhor C. = 1;
+        for(j=0;j<n-1; j++){  //Pior C. = n²+n-2      Melhor C. = 2n
+            if(A[j]>A[j+1]){    //Pior C. = (n²+n)/2    Melhor C. = n-1
+                aux = A[j];     //Pior C. = (n²+n)/2    Melhor C. = 0
+                A[j] = A[j+1];  //Pior C. = (n²+n)/2    Melhor C. = 0
+                A[j+1] = aux;   //Pior C. = (n²+n)/2    Melhor C. = 0
+                troca =1;       //Pior C. = (n²+n)/2    Melhor C. = 0
+            }
+        }
+        if(!troca)              //Pior C. = n-1         Melhor C. = 1;
+            break;
+    }
+    //Pior caso: O(n²)  Melhor caso: O(n)
+}
+
+int main() {
+  int data[] = {5, 8, 9, 7, -2, 0, 9, 10, 10, 4};
+  
+  // find array's length
+  int size = sizeof(data) / sizeof(data[0]);
+  cout << "Array desordenado:\n";  
+  printArray(data, size);
+  
+  bubblesortI(data, size);
+  
+  cout << "Array ordenado:\n";  
+  printArray(data, size);
+}
