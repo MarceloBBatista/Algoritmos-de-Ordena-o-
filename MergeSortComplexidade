@@ -1,0 +1,84 @@
+// Merge sort in C++
+
+#include <iostream>
+using namespace std;
+
+// Print the array
+void printArray(int arr[], int size) {
+  for (int i = 0; i < size; i++)
+    cout << arr[i] << " ";
+  cout << endl;
+}
+
+// Mesclar dois subarrays L e M em arr
+void merge(int arr[], int p, int q, int r) {
+  // Crie L ← A[p..q] e M ← A[q+1..r]
+  int n1 = q - p + 1;
+  int n2 = r - q;
+  int L[n1], M[n2];
+  for (int i = 0; i < n1; i++)
+    L[i] = arr[p + i];
+  for (int j = 0; j < n2; j++)
+    M[j] = arr[q + 1 + j];
+  // Manter o índice atual de sub-matrizes e matriz principal
+  int i, j, k;
+  i = 0;
+  j = 0;
+  k = p;
+  // Até chegarmos a qualquer extremidade de L ou M, escolha o maior entre
+  // elementos L e M e coloque-os na posição correta em A[p..r]
+  while (i < n1 && j < n2) {
+    if (L[i] <= M[j]) {
+      arr[k] = L[i];
+      i++;
+    } else {
+      arr[k] = M[j];
+      j++;
+    }
+    k++;
+  }
+  // Quando ficarmos sem elementos em L ou M,
+  // pegue os elementos restantes e coloque em A[p..r]
+  while (i < n1) {
+    arr[k] = L[i];
+    i++;
+    k++;
+  }
+  while (j < n2) {
+    arr[k] = M[j];
+    j++;
+    k++;
+  }
+}
+
+// Divida o array em dois subarrays, ordene-os e mescle-os
+void mergeSort(int arr[], int l, int r) {
+  if (l < r) { //Θ(1)
+    // m é o ponto onde o array é dividido em dois subarrays
+    int m = (l + r) / 2; //Θ(1)
+
+    mergeSort(arr, l, m); //T([n/2])
+    mergeSort(arr, m + 1, r);//T([n/2])
+
+    // Mesclar os subarrays ordenados
+    merge(arr, l, m, r); //Θ(n)
+    // recorrência T(n)= Θ(1)+T(n/2)+T(n/2)+Θ(n)
+    // T(n)=2T(n/2)+Θ(n)+Θ(1) - tirar theta de 1 pq é constante
+    // T(n)=2T(n/2)+n - Recorrencia
+    // Duas chamadas recursivas para o merge, a cada chamada diminui a entrada pela metade, a cada execução parcial adiciona um custo linear (+n).
+  }
+}
+
+// Driver program
+int main() {
+  int arr[] = {6, 5, 12, 10, 9, 1};
+  int size = sizeof(arr) / sizeof(arr[0]);
+  cout << "Array Desordenado: \n";
+  printArray(arr, size);
+  
+  mergeSort(arr, 0, size - 1);
+
+  cout << "Array ordenado: \n";
+  printArray(arr, size);
+  return 0;
+}
