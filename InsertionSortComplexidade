@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+void printArray(int array[], int size) {
+  for (int i = 0; i < size; i++) {
+    cout << array[i] << " ";
+  }
+  cout << endl;
+}
+
+void insertion_sort (int *P_V, int n){
+  int aux, i, c, a=0; // 1
+  for (i=1; i<n; i++){ // (vf-vi+1)*2 ->(n-1+1)*2= 2n
+    aux = P_V[i]; // n-1
+    for(c=i; c>0; c--){ //n^2-n
+      if(aux < P_V[c-1]){ // n^2-n/2
+        P_V[c] = P_V[c-1];
+      }else{
+        a++;
+      }
+    }
+    P_V[c+a]=aux; 
+    a=0;
+    //isso tudo = 2.(n-1) -> 2n-2
+  }
+}
+
+int main() {
+  int data[] = {-3, 0, -5, -8, 10, 8, 7, 1, 0, 3};
+  int size = sizeof(data) / sizeof(data[0]);
+    cout << "Array Desordenado: \n";
+    printArray(data, size);
+  insertion_sort(data, size);
+  cout << "Array Ordenado: \n";
+  printArray(data, size);
+}
